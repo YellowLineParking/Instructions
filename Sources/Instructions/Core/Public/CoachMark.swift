@@ -6,9 +6,20 @@ import UIKit
 /// This structure handle the parametrization of a given coach mark.
 /// It doesn't provide any clue about the way it will look, however.
 public struct CoachMark {
+    public struct BorderConfig {
+        public let color: UIColor
+        public let width: CGFloat
+        
+        public init(color: UIColor, width: CGFloat) {
+            self.color = color
+            self.width = width
+        }
+    }
     // MARK: - Public properties
     /// The path to cut in the overlay, so the point of interest will be visible.
     public var cutoutPath: UIBezierPath?
+    
+    public var cutoutBorderConfig: BorderConfig?
 
     /// The vertical offset for the arrow (in rare cases, the arrow might need to overlap with
     /// the coach mark body).
@@ -132,3 +143,5 @@ public struct CoachMark {
 }
 
 extension CoachMark: Equatable {}
+
+extension CoachMark.BorderConfig: Equatable {}

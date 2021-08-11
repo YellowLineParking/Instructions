@@ -31,6 +31,11 @@ public class OverlayManager {
         get { return overlayView.cutoutPath }
         set { overlayView.cutoutPath = newValue }
     }
+    
+    public var cutoutBorderConfig: CoachMark.BorderConfig? {
+        get { return overlayView.cutoutBorderConfig }
+        set { overlayView.cutoutBorderConfig = newValue }
+    }
 
     /// `true` to let the overlay catch tap event and forward them to the
     /// CoachMarkController, `false` otherwise.

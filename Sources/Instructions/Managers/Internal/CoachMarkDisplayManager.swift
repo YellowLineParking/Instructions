@@ -220,6 +220,7 @@ class CoachMarkDisplayManager {
                                                   andOverlayView: overlayView)
 
             overlayView.cutoutPath = cutoutPath
+            overlayView.cutoutBorderConfig = coachMark.cutoutBorderConfig
         } else {
             overlayView.cutoutPath = nil
         }

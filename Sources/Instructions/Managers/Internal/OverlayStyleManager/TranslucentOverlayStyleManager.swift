@@ -12,6 +12,7 @@ class TranslucentOverlayStyleManager: OverlayStyleManager {
     private let color: UIColor
 
     // MARK: Layer Mask related properties
+    private var cutoutBorderLayer: CAShapeLayer?
     private var cutoutMaskLayer = CAShapeLayer()
     private var fullMaskLayer = CAShapeLayer()
     private lazy var overlayLayer: CALayer = {
@@ -80,7 +81,11 @@ class TranslucentOverlayStyleManager: OverlayStyleManager {
 
     func showCutout(_ show: Bool, withDuration duration: TimeInterval,
                     completion: ((Bool) -> Void)?) {
-        if show { updateCutoutPath() }
+        if show {
+            updateCutoutPath()
+        } else {
+            cutoutBorderLayer?.removeFromSuperlayer()
+        }
 
         CATransaction.begin()
 
@@ -109,6 +114,7 @@ class TranslucentOverlayStyleManager: OverlayStyleManager {
 
     // MARK: Private methods
     private func updateCutoutPath() {
+        cutoutBorderLayer?.removeFromSuperlayer()
         cutoutMaskLayer.removeFromSuperlayer()
         fullMaskLayer.removeFromSuperlayer()
 
@@ -119,12 +125,21 @@ class TranslucentOverlayStyleManager: OverlayStyleManager {
 
         configureCutoutMask(usingCutoutPath: cutoutPath)
         configureFullMask()
+        if let borderParameters = overlayView?.cutoutBorderConfig {
+            configureCutoutBorderMask(using: cutoutPath, with: borderParameters)
+        } else {
+            cutoutBorderLayer = nil
+        }
 
         let maskLayer = CALayer()
         maskLayer.frame = overlayLayer.bounds
         maskLayer.addSublayer(self.cutoutMaskLayer)
         maskLayer.addSublayer(self.fullMaskLayer)
 
+        if let borderLayer = cutoutBorderLayer {
+            maskLayer.addSublayer(borderLayer)
+            overlayLayer.addSublayer(borderLayer)
+        }
         overlayLayer.mask = maskLayer
     }
 
@@ -139,6 +154,23 @@ class TranslucentOverlayStyleManager: OverlayStyleManager {
         cutoutMaskLayerPath.append(cutoutPath)
 
         cutoutMaskLayer.path = cutoutMaskLayerPath.cgPath
+    }
+    
+    private func configureCutoutBorderMask(using cutoutPath: UIBezierPath, with parameters: CoachMark.BorderConfig) {
+        guard parameters.color != UIColor.clear, parameters.width > 0 else {
+            cutoutBorderLayer = nil
+            return
+        }
+
+        let borderPath = cutoutPath
+        cutoutBorderLayer = CAShapeLayer()
+        cutoutBorderLayer?.name = "cutoutBorderLayer"
+        cutoutBorderLayer?.frame = overlayLayer.frame
+        cutoutBorderLayer?.lineWidth = parameters.width * 2
+        cutoutBorderLayer?.fillColor = UIColor.clear.cgColor
+        cutoutBorderLayer?.strokeColor = parameters.color.cgColor
+        
+        cutoutBorderLayer?.path = borderPath.cgPath
     }
 
     private func configureFullMask() {

@@ -9,6 +9,7 @@ class OverlayView: UIView {
     internal static let sublayerName = "Instructions.OverlaySublayer"
 
     var cutoutPath: UIBezierPath?
+    var cutoutBorderConfig: CoachMark.BorderConfig?
 
     let holder: UIView
     let ornaments: UIView
