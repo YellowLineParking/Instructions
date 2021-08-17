@@ -251,7 +251,15 @@ public class FlowManager {
 
         switch pauseStyle {
         case .hideInstructions:
-            coachMarksViewController.overlayManager.showWindow(false, completion: nil)
+            coachMarksViewController.overlayManager.showWindow(false) { _ in
+                guard let coachMark = self.currentCoachMark else {
+                    return
+                }
+                self.coachMarksViewController.hide(
+                    coachMark: coachMark,
+                    at: self.currentIndex,
+                    animated: false)
+            }
         case .hideOverlay:
             coachMarksViewController.overlayManager.showOverlay(false, completion: nil)
         case .hideNothing: break
