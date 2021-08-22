@@ -228,12 +228,16 @@ public class FlowManager {
     }
 
     // MARK: Public methods
-    public func resume() {
+    public func resume(advancing: Bool = false) {
         if isStarted && isPaused {
             isPaused = false
 
             let completion: (Bool) -> Void = { _ in
-                self.createAndShowCoachMark(afterResuming: true)
+                if (advancing) {
+                    self.showNext()
+                } else {
+                    self.createAndShowCoachMark(afterResuming: true)
+                }
             }
 
             if coachMarksViewController.overlayManager.isWindowHidden {
