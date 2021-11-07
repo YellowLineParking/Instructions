@@ -4,5 +4,5 @@
 import Foundation
 
 public enum PauseStyle {
-    case hideInstructions, hideOverlay, hideNothing
+    case hideInstructions, hideOverlay, hideNothing, hideCoachmarks
 }
