@@ -256,17 +256,13 @@ public class FlowManager {
         switch pauseStyle {
         case .hideInstructions:
             coachMarksViewController.overlayManager.showWindow(false) { _ in
-                guard let coachMark = self.currentCoachMark else {
-                    return
-                }
-                self.coachMarksViewController.hide(
-                    coachMark: coachMark,
-                    at: self.currentIndex,
-                    animated: false)
+                self.hideCoachMarkIfVisible()
             }
         case .hideOverlay:
             coachMarksViewController.overlayManager.showOverlay(false, completion: nil)
         case .hideNothing: break
+        case .hideCoachmarks:
+            hideCoachMarkIfVisible()
         }
     }
 
@@ -332,5 +328,20 @@ extension FlowManager: CoachMarksViewControllerDelegate {
     func didTransition(afterChanging change: ConfigurationChange) {
         coachMarksViewController.restoreAfterSizeTransitionDidComplete()
         createAndShowCoachMark(changing: change)
+    }
+}
+
+private extension FlowManager {
+    
+    @discardableResult
+    func hideCoachMarkIfVisible() -> Bool {
+        guard let coachMark = self.currentCoachMark else {
+            return false
+        }
+        self.coachMarksViewController.hide(
+            coachMark: coachMark,
+            at: self.currentIndex,
+            animated: false)
+        return true
     }
 }
