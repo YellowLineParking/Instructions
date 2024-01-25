@@ -2,6 +2,31 @@
 Important changes to Instructions will be documented in this file.
 Instructions follows [Semantic Versioning](http://semver.org/).
 
+## [2.3.0](https://github.com/ephread/Instructions/releases/tag/2.3.0)
+Released on 2023-09-13.
+
+### Added
+- Support for Xcode 15 / Swift 5.9
+
+### Changed
+- Changed `FlowManager.currentIndex` to be public get, private set [#298]
+
+[#298]: https://github.com/ephread/Instructions/issues/298
+
+## [2.2.0](https://github.com/ephread/Instructions/releases/tag/2.2.0)
+Released on 2022-05-25.
+
+### Added
+- Emulate coach mark skipping when stopping the flow from code [#265]
+- Expose Instructions' root window [#268]
+- Add a new delegate method triggered when tapping a coach mark [#185]
+- Add new position options for the default coach mark views' "next" label [#273]
+
+[#265]: https://github.com/ephread/Instructions/issues/265
+[#268]: https://github.com/ephread/Instructions/issues/268
+[#185]: https://github.com/ephread/Instructions/issues/185
+[#273]: https://github.com/ephread/Instructions/issues/273
+
 ## [2.1.1](https://github.com/ephread/Instructions/releases/tag/2.1.1)
 Released on 2021-11-16.
 
@@ -9,6 +34,10 @@ Released on 2021-11-16.
 - Fix [#258] - Fix documentation comments in CoachMarkHelper
 - Fix [#259] - Quick fix regarding no cutout area use
 - Fix [#261] - Fix iOS 15 Layout for CoachMarkBodyDefaultView
+
+[#258]: https://github.com/ephread/Instructions/issues/258
+[#259]: https://github.com/ephread/Instructions/issues/259
+[#261]: https://github.com/ephread/Instructions/issues/261
 
 ## [2.1.0](https://github.com/ephread/Instructions/releases/tag/2.1.0)
 Released on 2021-06-06.
